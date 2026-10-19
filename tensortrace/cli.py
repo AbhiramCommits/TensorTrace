@@ -9,6 +9,7 @@ from pathlib import Path
 
 from tensortrace import __version__
 from tensortrace.config import DEFAULT_BACKENDS, DEFAULT_MODELS, RunConfig
+from tensortrace.system.sysfs import collect_sysinfo
 
 
 def _add_common_run_args(parser: argparse.ArgumentParser) -> None:
@@ -67,7 +68,7 @@ def _cmd_run(args: argparse.Namespace) -> int:
 
 
 def _cmd_sysinfo(_args: argparse.Namespace) -> int:
-    print(json.dumps({"status": "not implemented"}, indent=2))
+    print(json.dumps(collect_sysinfo(), indent=2))
     return 0
 
 

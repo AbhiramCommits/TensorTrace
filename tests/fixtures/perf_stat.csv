@@ -1,0 +1,6 @@
+<not supported>,,cycles,0,100.00,,
+<not supported>,,instructions,0,100.00,,
+<not supported>,,cache-references,0,100.00,,
+<not supported>,,cache-misses,0,100.00,,
+725,,page-faults,23639501,100.00,,
+31,,context-switches,23639501,100.00,,

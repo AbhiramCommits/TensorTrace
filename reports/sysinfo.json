@@ -1,0 +1,51 @@
+{
+  "host": {
+    "system": "Darwin",
+    "release": "27.0.0",
+    "machine": "arm64",
+    "python": "3.11.14",
+    "linux": false
+  },
+  "cpu": {
+    "model": "Apple M3",
+    "logical_cores": 8,
+    "physical_cores": 8,
+    "affinity": {
+      "cpus": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "mask": "ff",
+      "source": "os.cpu_count fallback"
+    },
+    "affinity_numa_nodes": []
+  },
+  "memory": {
+    "total_kb": 16777216
+  },
+  "numa": {
+    "available": false,
+    "reason": "/sys/devices/system/node is not present on this host",
+    "nodes": {}
+  },
+  "cache": {
+    "available": false,
+    "reason": "/sys/devices/system/cpu is not present on this host",
+    "caches": [],
+    "levels": {}
+  },
+  "perf": {
+    "available": false,
+    "reason": "perf binary was not found on PATH"
+  },
+  "procfs": {
+    "available": false,
+    "reason": "/proc/stat or /proc/self/status is not readable on this host"
+  }
+}

@@ -1,0 +1,1124 @@
+{
+  "schema_version": 1,
+  "run_id": "run-20261019-083301-torch-resnet18",
+  "backend": "torch",
+  "model": "resnet18",
+  "config": {
+    "model": "resnet18",
+    "backend": "torch",
+    "batch_size": 1,
+    "iterations": 10,
+    "warmup": 3,
+    "threads": 0,
+    "output_dir": "reports",
+    "seed": 42,
+    "effective_threads": 8
+  },
+  "environment": {
+    "timestamp_utc": "2026-10-19T08:33:01.143226+00:00",
+    "hostname": "Abhirams-MacBook-Air.local",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python_version": "3.11.14",
+    "python_executable": "/Users/abhiramkasireddi/TensorTrace/.venv/bin/python",
+    "cpu_count": 8,
+    "packages": {
+      "torch": "2.14.1",
+      "onnxruntime": "1.31.0",
+      "psutil": "7.2.2",
+      "numpy": "2.4.6"
+    }
+  },
+  "layers": [
+    {
+      "name": "conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 1.934008,
+      "total_ms": 19.340083,
+      "calls": 10,
+      "output_bytes": 3211264,
+      "self_memory_bytes": null,
+      "percent_of_total": 9.7059
+    },
+    {
+      "name": "layer1.1.conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 1.335367,
+      "total_ms": 13.353667,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 6.7016
+    },
+    {
+      "name": "maxpool",
+      "op_type": "MaxPool2d",
+      "mean_ms": 1.276012,
+      "total_ms": 12.760125,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 6.4037
+    },
+    {
+      "name": "layer1.0.conv2",
+      "op_type": "Conv2d",
+      "mean_ms": 1.265738,
+      "total_ms": 12.657377,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 6.3521
+    },
+    {
+      "name": "layer4.1.conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 1.217679,
+      "total_ms": 12.17679,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 6.1109
+    },
+    {
+      "name": "layer1.0.conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 1.203463,
+      "total_ms": 12.034626,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 6.0396
+    },
+    {
+      "name": "layer1.1.conv2",
+      "op_type": "Conv2d",
+      "mean_ms": 1.137158,
+      "total_ms": 11.371581,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 5.7068
+    },
+    {
+      "name": "layer4.1.conv2",
+      "op_type": "Conv2d",
+      "mean_ms": 1.039596,
+      "total_ms": 10.395958,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 5.2172
+    },
+    {
+      "name": "layer4.0.conv2",
+      "op_type": "Conv2d",
+      "mean_ms": 0.960938,
+      "total_ms": 9.609375,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 4.8225
+    },
+    {
+      "name": "layer2.0.conv2",
+      "op_type": "Conv2d",
+      "mean_ms": 0.786779,
+      "total_ms": 7.867792,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 3.9485
+    },
+    {
+      "name": "layer3.0.conv2",
+      "op_type": "Conv2d",
+      "mean_ms": 0.735637,
+      "total_ms": 7.356375,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 3.6918
+    },
+    {
+      "name": "layer3.1.conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 0.719675,
+      "total_ms": 7.196748,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 3.6117
+    },
+    {
+      "name": "layer2.1.conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 0.665971,
+      "total_ms": 6.659709,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 3.3422
+    },
+    {
+      "name": "layer2.1.conv2",
+      "op_type": "Conv2d",
+      "mean_ms": 0.643683,
+      "total_ms": 6.436833,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 3.2303
+    },
+    {
+      "name": "layer3.1.conv2",
+      "op_type": "Conv2d",
+      "mean_ms": 0.635896,
+      "total_ms": 6.358958,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 3.1913
+    },
+    {
+      "name": "layer2.0.conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 0.556421,
+      "total_ms": 5.564208,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 2.7924
+    },
+    {
+      "name": "layer4.0.conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 0.502071,
+      "total_ms": 5.020711,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 2.5197
+    },
+    {
+      "name": "layer3.0.conv1",
+      "op_type": "Conv2d",
+      "mean_ms": 0.424992,
+      "total_ms": 4.249918,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 2.1328
+    },
+    {
+      "name": "bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.418333,
+      "total_ms": 4.183332,
+      "calls": 10,
+      "output_bytes": 3211264,
+      "self_memory_bytes": null,
+      "percent_of_total": 2.0994
+    },
+    {
+      "name": "layer3.0.downsample.0",
+      "op_type": "Conv2d",
+      "mean_ms": 0.166175,
+      "total_ms": 1.661752,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.834
+    },
+    {
+      "name": "layer2.0.downsample.0",
+      "op_type": "Conv2d",
+      "mean_ms": 0.161421,
+      "total_ms": 1.614208,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.8101
+    },
+    {
+      "name": "relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.122213,
+      "total_ms": 1.222126,
+      "calls": 10,
+      "output_bytes": 3211264,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.6133
+    },
+    {
+      "name": "layer1.0.bn2",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.12215,
+      "total_ms": 1.221501,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.613
+    },
+    {
+      "name": "layer4.0.downsample.0",
+      "op_type": "Conv2d",
+      "mean_ms": 0.112521,
+      "total_ms": 1.125206,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.5647
+    },
+    {
+      "name": "layer1.1.bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.110087,
+      "total_ms": 1.100873,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.5525
+    },
+    {
+      "name": "layer1.0.relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.096588,
+      "total_ms": 0.965876,
+      "calls": 20,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.4847
+    },
+    {
+      "name": "fc",
+      "op_type": "Linear",
+      "mean_ms": 0.0918,
+      "total_ms": 0.918003,
+      "calls": 10,
+      "output_bytes": 4000,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.4607
+    },
+    {
+      "name": "layer1.0.bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.091333,
+      "total_ms": 0.913334,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.4584
+    },
+    {
+      "name": "layer1.1.bn2",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.087821,
+      "total_ms": 0.878209,
+      "calls": 10,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.4407
+    },
+    {
+      "name": "layer2.0.bn2",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.087513,
+      "total_ms": 0.875126,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.4392
+    },
+    {
+      "name": "layer1.1.relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.078783,
+      "total_ms": 0.787832,
+      "calls": 20,
+      "output_bytes": 802816,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3954
+    },
+    {
+      "name": "layer2.0.bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.076879,
+      "total_ms": 0.768791,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3858
+    },
+    {
+      "name": "layer2.0.relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.075034,
+      "total_ms": 0.750335,
+      "calls": 20,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3766
+    },
+    {
+      "name": "layer4.1.bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.072646,
+      "total_ms": 0.72646,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3646
+    },
+    {
+      "name": "layer2.0.downsample.1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.067962,
+      "total_ms": 0.679624,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3411
+    },
+    {
+      "name": "layer3.0.relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.0667,
+      "total_ms": 0.667001,
+      "calls": 20,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3347
+    },
+    {
+      "name": "layer2.1.relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.064804,
+      "total_ms": 0.648042,
+      "calls": 20,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3252
+    },
+    {
+      "name": "avgpool",
+      "op_type": "AdaptiveAvgPool2d",
+      "mean_ms": 0.062738,
+      "total_ms": 0.627377,
+      "calls": 10,
+      "output_bytes": 2048,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3149
+    },
+    {
+      "name": "layer3.0.bn2",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.061363,
+      "total_ms": 0.613626,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3079
+    },
+    {
+      "name": "layer2.1.bn2",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.060446,
+      "total_ms": 0.604458,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.3033
+    },
+    {
+      "name": "layer4.1.bn2",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.0589,
+      "total_ms": 0.588999,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2956
+    },
+    {
+      "name": "layer3.1.relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.057542,
+      "total_ms": 0.575419,
+      "calls": 20,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2888
+    },
+    {
+      "name": "layer2.1.bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.057529,
+      "total_ms": 0.575292,
+      "calls": 10,
+      "output_bytes": 401408,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2887
+    },
+    {
+      "name": "layer3.0.bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.056796,
+      "total_ms": 0.567959,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.285
+    },
+    {
+      "name": "layer3.1.bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.052446,
+      "total_ms": 0.524458,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2632
+    },
+    {
+      "name": "layer4.0.bn1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.048879,
+      "total_ms": 0.488794,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2453
+    },
+    {
+      "name": "layer4.0.bn2",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.048287,
+      "total_ms": 0.482874,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2423
+    },
+    {
+      "name": "layer3.1.bn2",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.040996,
+      "total_ms": 0.409956,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2057
+    },
+    {
+      "name": "layer3.0.downsample.1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.040946,
+      "total_ms": 0.409459,
+      "calls": 10,
+      "output_bytes": 200704,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2055
+    },
+    {
+      "name": "layer4.0.downsample.1",
+      "op_type": "BatchNorm2d",
+      "mean_ms": 0.040313,
+      "total_ms": 0.403125,
+      "calls": 10,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.2023
+    },
+    {
+      "name": "layer4.1.relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.016121,
+      "total_ms": 0.16121,
+      "calls": 20,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.0809
+    },
+    {
+      "name": "layer4.0.relu",
+      "op_type": "ReLU",
+      "mean_ms": 0.011054,
+      "total_ms": 0.110542,
+      "calls": 20,
+      "output_bytes": 100352,
+      "self_memory_bytes": null,
+      "percent_of_total": 0.0555
+    }
+  ],
+  "op_types": [],
+  "operators": [
+    {
+      "name": "aten::_slow_conv2d_forward",
+      "calls": 20,
+      "self_cpu_time_us": 28894.844,
+      "cpu_time_us": 29046.486,
+      "self_cpu_memory_bytes": -58756096
+    },
+    {
+      "name": "aten::native_batch_norm",
+      "calls": 20,
+      "self_cpu_time_us": 2540.274,
+      "cpu_time_us": 2623.48,
+      "self_cpu_memory_bytes": -38400
+    },
+    {
+      "name": "aten::max_pool2d_with_indices",
+      "calls": 1,
+      "self_cpu_time_us": 1100.652,
+      "cpu_time_us": 1100.652,
+      "self_cpu_memory_bytes": 2408448
+    },
+    {
+      "name": "aten::clamp_min_",
+      "calls": 17,
+      "self_cpu_time_us": 411.363,
+      "cpu_time_us": 411.363,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::addmm",
+      "calls": 1,
+      "self_cpu_time_us": 258.144,
+      "cpu_time_us": 266.561,
+      "self_cpu_memory_bytes": 4000
+    },
+    {
+      "name": "aten::add_",
+      "calls": 8,
+      "self_cpu_time_us": 217.801,
+      "cpu_time_us": 217.801,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::to",
+      "calls": 1,
+      "self_cpu_time_us": 181.859,
+      "cpu_time_us": 204.586,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::empty",
+      "calls": 160,
+      "self_cpu_time_us": 178.314,
+      "cpu_time_us": 178.314,
+      "self_cpu_memory_bytes": 68729344
+    },
+    {
+      "name": "aten::_batch_norm_impl_index",
+      "calls": 20,
+      "self_cpu_time_us": 114.191,
+      "cpu_time_us": 2762.233,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::_convolution",
+      "calls": 20,
+      "self_cpu_time_us": 80.817,
+      "cpu_time_us": 29169.844,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::convolution",
+      "calls": 20,
+      "self_cpu_time_us": 44.997,
+      "cpu_time_us": 29214.841,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::thnn_conv2d",
+      "calls": 20,
+      "self_cpu_time_us": 40.624,
+      "cpu_time_us": 29087.11,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::batch_norm",
+      "calls": 20,
+      "self_cpu_time_us": 38.649,
+      "cpu_time_us": 2800.882,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::conv2d",
+      "calls": 20,
+      "self_cpu_time_us": 36.773,
+      "cpu_time_us": 29251.614,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::resize_",
+      "calls": 20,
+      "self_cpu_time_us": 36.624,
+      "cpu_time_us": 36.624,
+      "self_cpu_memory_bytes": 9934848
+    },
+    {
+      "name": "aten::view",
+      "calls": 21,
+      "self_cpu_time_us": 29.058,
+      "cpu_time_us": 29.058,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::relu_",
+      "calls": 17,
+      "self_cpu_time_us": 23.461,
+      "cpu_time_us": 434.824,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::max_pool2d",
+      "calls": 1,
+      "self_cpu_time_us": 19.476,
+      "cpu_time_us": 1120.128,
+      "self_cpu_memory_bytes": -1605632
+    },
+    {
+      "name": "aten::empty_like",
+      "calls": 20,
+      "self_cpu_time_us": 17.557,
+      "cpu_time_us": 48.141,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::sum",
+      "calls": 1,
+      "self_cpu_time_us": 16.891,
+      "cpu_time_us": 20.1,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::div_",
+      "calls": 1,
+      "self_cpu_time_us": 15.374,
+      "cpu_time_us": 219.96,
+      "self_cpu_memory_bytes": -4
+    },
+    {
+      "name": "aten::_to_copy",
+      "calls": 1,
+      "self_cpu_time_us": 14.352,
+      "cpu_time_us": 22.727,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::mean",
+      "calls": 1,
+      "self_cpu_time_us": 10.417,
+      "cpu_time_us": 250.477,
+      "self_cpu_memory_bytes": 2048
+    },
+    {
+      "name": "aten::copy_",
+      "calls": 2,
+      "self_cpu_time_us": 9.709,
+      "cpu_time_us": 9.709,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::linear",
+      "calls": 1,
+      "self_cpu_time_us": 8.1,
+      "cpu_time_us": 287.328,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::adaptive_avg_pool2d",
+      "calls": 1,
+      "self_cpu_time_us": 5.101,
+      "cpu_time_us": 255.578,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::t",
+      "calls": 1,
+      "self_cpu_time_us": 4.958,
+      "cpu_time_us": 12.667,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::transpose",
+      "calls": 1,
+      "self_cpu_time_us": 4.251,
+      "cpu_time_us": 7.709,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::as_strided",
+      "calls": 2,
+      "self_cpu_time_us": 3.708,
+      "cpu_time_us": 3.708,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::empty_strided",
+      "calls": 1,
+      "self_cpu_time_us": 3.583,
+      "cpu_time_us": 3.583,
+      "self_cpu_memory_bytes": 4
+    },
+    {
+      "name": "aten::flatten",
+      "calls": 1,
+      "self_cpu_time_us": 3.458,
+      "cpu_time_us": 5.601,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::fill_",
+      "calls": 1,
+      "self_cpu_time_us": 3.209,
+      "cpu_time_us": 3.209,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::expand",
+      "calls": 1,
+      "self_cpu_time_us": 2.917,
+      "cpu_time_us": 3.167,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::_nnpack_available",
+      "calls": 20,
+      "self_cpu_time_us": 1.917,
+      "cpu_time_us": 1.917,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::resolve_conj",
+      "calls": 2,
+      "self_cpu_time_us": 0.333,
+      "cpu_time_us": 0.333,
+      "self_cpu_memory_bytes": 0
+    }
+  ],
+  "iteration_latencies_ms": [
+    21.977375,
+    20.306459,
+    20.201375,
+    21.328167,
+    21.134875,
+    20.475542,
+    21.009292,
+    20.671625,
+    22.204875,
+    20.81175
+  ],
+  "latency": {
+    "count": 10,
+    "mean_ms": 21.012133,
+    "median_ms": 20.910521,
+    "p95_ms": 22.204875,
+    "stddev_ms": 0.637857,
+    "min_ms": 20.201375,
+    "max_ms": 22.204875,
+    "throughput_ips": 47.59155
+  },
+  "snapshot": {
+    "procfs_available": false,
+    "window_seconds": 0.536273,
+    "cpu": {
+      "available": false,
+      "reason": "/proc/stat is not readable on this host",
+      "aggregate_percent": null,
+      "per_cpu_percent": {}
+    },
+    "memory": {
+      "source": "psutil",
+      "rss_start_kb": 289264,
+      "rss_end_kb": 310992,
+      "rss_peak_kb": 310992,
+      "rss_delta_kb": 21728,
+      "threads_start": 1,
+      "threads_end": 16,
+      "context_switches": {},
+      "mem_total_kb": null,
+      "mem_available_kb": null
+    },
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "time_series": [
+    {
+      "t_ms": 0.096,
+      "timestamp": 1792398780.56355,
+      "rss_kb": 289296,
+      "rss_mb": 282.516,
+      "threads": 2,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 124.2
+    },
+    {
+      "t_ms": 27.783,
+      "timestamp": 1792398780.59124,
+      "rss_kb": 317504,
+      "rss_mb": 310.062,
+      "threads": 9,
+      "cpu_percent": 61.9,
+      "process_cpu_percent": 91.8
+    },
+    {
+      "t_ms": 57.95,
+      "timestamp": 1792398780.621407,
+      "rss_kb": 335792,
+      "rss_mb": 327.922,
+      "threads": 9,
+      "cpu_percent": 58.3,
+      "process_cpu_percent": 98.1
+    },
+    {
+      "t_ms": 88.084,
+      "timestamp": 1792398780.651541,
+      "rss_kb": 335792,
+      "rss_mb": 327.922,
+      "threads": 9,
+      "cpu_percent": 60.0,
+      "process_cpu_percent": 98.3
+    },
+    {
+      "t_ms": 118.212,
+      "timestamp": 1792398780.6816692,
+      "rss_kb": 335792,
+      "rss_mb": 327.922,
+      "threads": 9,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 96.3
+    },
+    {
+      "t_ms": 145.427,
+      "timestamp": 1792398780.708884,
+      "rss_kb": 335792,
+      "rss_mb": 327.922,
+      "threads": 9,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 100.0
+    },
+    {
+      "t_ms": 175.611,
+      "timestamp": 1792398780.739069,
+      "rss_kb": 348240,
+      "rss_mb": 340.078,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 140.2
+    },
+    {
+      "t_ms": 204.566,
+      "timestamp": 1792398780.768026,
+      "rss_kb": 350096,
+      "rss_mb": 341.891,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 168.1
+    },
+    {
+      "t_ms": 234.11,
+      "timestamp": 1792398780.797569,
+      "rss_kb": 346576,
+      "rss_mb": 338.453,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 183.3
+    },
+    {
+      "t_ms": 264.335,
+      "timestamp": 1792398780.827795,
+      "rss_kb": 349472,
+      "rss_mb": 341.281,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 204.4
+    },
+    {
+      "t_ms": 294.259,
+      "timestamp": 1792398780.8577201,
+      "rss_kb": 346592,
+      "rss_mb": 338.469,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 238.0
+    },
+    {
+      "t_ms": 322.613,
+      "timestamp": 1792398780.886074,
+      "rss_kb": 343056,
+      "rss_mb": 335.016,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 210.9
+    },
+    {
+      "t_ms": 352.765,
+      "timestamp": 1792398780.9162261,
+      "rss_kb": 343056,
+      "rss_mb": 335.016,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 226.1
+    },
+    {
+      "t_ms": 381.169,
+      "timestamp": 1792398780.94463,
+      "rss_kb": 346592,
+      "rss_mb": 338.469,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 218.8
+    },
+    {
+      "t_ms": 411.397,
+      "timestamp": 1792398780.974859,
+      "rss_kb": 347776,
+      "rss_mb": 339.625,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 217.7
+    },
+    {
+      "t_ms": 438.286,
+      "timestamp": 1792398781.001749,
+      "rss_kb": 350112,
+      "rss_mb": 341.906,
+      "threads": 16,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 228.4
+    },
+    {
+      "t_ms": 468.445,
+      "timestamp": 1792398781.031908,
+      "rss_kb": 343744,
+      "rss_mb": 335.688,
+      "threads": 17,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 198.3
+    },
+    {
+      "t_ms": 507.124,
+      "timestamp": 1792398781.0705879,
+      "rss_kb": 347712,
+      "rss_mb": 339.562,
+      "threads": 17,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 50.3
+    },
+    {
+      "t_ms": 533.305,
+      "timestamp": 1792398781.096769,
+      "rss_kb": 345584,
+      "rss_mb": 337.484,
+      "threads": 17,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 69.4
+    },
+    {
+      "t_ms": 535.988,
+      "timestamp": 1792398781.099452,
+      "rss_kb": 310992,
+      "rss_mb": 303.703,
+      "threads": 16,
+      "cpu_percent": 85.9,
+      "process_cpu_percent": 104.7
+    }
+  ],
+  "time_series_summary": {
+    "count": 20,
+    "duration_ms": 535.892,
+    "rss_start_mb": 282.516,
+    "rss_peak_mb": 341.906,
+    "rss_end_mb": 303.703,
+    "cpu_mean_percent": 13.305,
+    "cpu_peak_percent": 85.9,
+    "cpu_p95_percent": 61.9,
+    "process_cpu_mean_percent": 153.365,
+    "process_cpu_peak_percent": 238.0
+  },
+  "perf": {
+    "available": false,
+    "reason": "perf binary was not found on PATH",
+    "counters": {},
+    "command": [],
+    "returncode": null,
+    "raw": ""
+  },
+  "system": {
+    "host": {
+      "system": "Darwin",
+      "release": "27.0.0",
+      "machine": "arm64",
+      "python": "3.11.14",
+      "linux": false
+    },
+    "cpu": {
+      "model": "Apple M3",
+      "logical_cores": 8,
+      "physical_cores": 8,
+      "affinity": {
+        "cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "mask": "ff",
+        "source": "os.cpu_count fallback"
+      },
+      "affinity_numa_nodes": []
+    },
+    "memory": {
+      "total_kb": 16777216
+    },
+    "numa": {
+      "available": false,
+      "reason": "/sys/devices/system/node is not present on this host",
+      "nodes": {}
+    },
+    "cache": {
+      "available": false,
+      "reason": "/sys/devices/system/cpu is not present on this host",
+      "caches": [],
+      "levels": {}
+    },
+    "perf": {
+      "available": false,
+      "reason": "perf binary was not found on PATH"
+    },
+    "procfs": {
+      "available": false,
+      "reason": "/proc/stat or /proc/self/status is not readable on this host"
+    }
+  },
+  "warnings": [],
+  "extra": {
+    "model": {
+      "parameter_count": 11689512,
+      "class": "ResNet"
+    },
+    "input_shape": [
+      1,
+      3,
+      224,
+      224
+    ],
+    "thread_count": 8,
+    "torch_num_threads": 8,
+    "torch_num_interop_threads": 1
+  }
+}

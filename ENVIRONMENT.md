@@ -37,6 +37,7 @@ Python 3.11.14
 | --- | --- |
 | torch | 2.14.1 |
 | torchvision | 0.29.1 |
+| onnx | 1.23.2 |
 | onnxruntime | 1.31.0 |
 | psutil | 7.2.2 |
 | numpy | 2.4.6 |

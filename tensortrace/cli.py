@@ -5,10 +5,12 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from dataclasses import replace
 from pathlib import Path
 
 from tensortrace import __version__
 from tensortrace.config import DEFAULT_BACKENDS, DEFAULT_MODELS, RunConfig
+from tensortrace.profilers.runner import profile_run, save_result
 from tensortrace.system.sysfs import collect_sysinfo
 
 
@@ -53,9 +55,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def _cmd_run(args: argparse.Namespace) -> int:
-    config = RunConfig(
+    base = RunConfig(
         model=args.model,
-        backend=args.backend,
+        backend="torch" if args.backend == "both" else args.backend,
         batch_size=args.batch_size,
         iterations=args.iterations,
         warmup=args.warmup,
@@ -63,7 +65,19 @@ def _cmd_run(args: argparse.Namespace) -> int:
         output_dir=args.out,
         seed=args.seed,
     )
-    print(json.dumps(config.to_dict(), indent=2))
+    backends = list(DEFAULT_BACKENDS) if args.backend == "both" else [args.backend]
+    for backend in backends:
+        config = replace(base, backend=backend)
+        result = profile_run(config)
+        path = save_result(result, config.output_dir)
+        latency = result.latency
+        print(
+            f"[{backend}/{config.model}] mean={latency['mean_ms']:.3f} ms "
+            f"median={latency['median_ms']:.3f} ms p95={latency['p95_ms']:.3f} ms "
+            f"throughput={latency['throughput_ips']:.2f} inferences/s -> {path}"
+        )
+        for warning in result.warnings:
+            print(f"  warning: {warning}")
     return 0
 
 

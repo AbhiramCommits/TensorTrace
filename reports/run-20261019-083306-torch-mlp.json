@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "run_id": "run-20261019-083306-torch-mlp",
+  "backend": "torch",
+  "model": "mlp",
+  "config": {
+    "model": "mlp",
+    "backend": "torch",
+    "batch_size": 1,
+    "iterations": 10,
+    "warmup": 3,
+    "threads": 1,
+    "output_dir": "reports",
+    "seed": 42,
+    "effective_threads": 1
+  },
+  "environment": {
+    "timestamp_utc": "2026-10-19T08:33:06.232369+00:00",
+    "hostname": "Abhirams-MacBook-Air.local",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python_version": "3.11.14",
+    "python_executable": "/Users/abhiramkasireddi/TensorTrace/.venv/bin/python",
+    "cpu_count": 8,
+    "packages": {
+      "torch": "2.14.1",
+      "onnxruntime": "1.31.0",
+      "psutil": "7.2.2",
+      "numpy": "2.4.6"
+    }
+  },
+  "layers": [
+    {
+      "name": "fc1",
+      "op_type": "Linear",
+      "mean_ms": 0.038471,
+      "total_ms": 0.384708,
+      "calls": 10,
+      "output_bytes": 1024,
+      "self_memory_bytes": null,
+      "percent_of_total": 49.9459
+    },
+    {
+      "name": "fc2",
+      "op_type": "Linear",
+      "mean_ms": 0.017983,
+      "total_ms": 0.179832,
+      "calls": 10,
+      "output_bytes": 512,
+      "self_memory_bytes": null,
+      "percent_of_total": 23.3472
+    },
+    {
+      "name": "fc3",
+      "op_type": "Linear",
+      "mean_ms": 0.009629,
+      "total_ms": 0.096292,
+      "calls": 10,
+      "output_bytes": 40,
+      "self_memory_bytes": null,
+      "percent_of_total": 12.5014
+    },
+    {
+      "name": "act2",
+      "op_type": "ReLU",
+      "mean_ms": 0.005533,
+      "total_ms": 0.055334,
+      "calls": 10,
+      "output_bytes": 512,
+      "self_memory_bytes": null,
+      "percent_of_total": 7.1839
+    },
+    {
+      "name": "act1",
+      "op_type": "ReLU",
+      "mean_ms": 0.005408,
+      "total_ms": 0.054084,
+      "calls": 10,
+      "output_bytes": 1024,
+      "self_memory_bytes": null,
+      "percent_of_total": 7.0216
+    }
+  ],
+  "op_types": [],
+  "operators": [
+    {
+      "name": "aten::addmm",
+      "calls": 3,
+      "self_cpu_time_us": 22.81,
+      "cpu_time_us": 29.473,
+      "self_cpu_memory_bytes": 1576
+    },
+    {
+      "name": "aten::linear",
+      "calls": 3,
+      "self_cpu_time_us": 16.543,
+      "cpu_time_us": 63.935,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::transpose",
+      "calls": 3,
+      "self_cpu_time_us": 8.427,
+      "cpu_time_us": 10.008,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::t",
+      "calls": 3,
+      "self_cpu_time_us": 7.911,
+      "cpu_time_us": 17.919,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::clamp_min",
+      "calls": 2,
+      "self_cpu_time_us": 4.247,
+      "cpu_time_us": 4.247,
+      "self_cpu_memory_bytes": 1536
+    },
+    {
+      "name": "aten::copy_",
+      "calls": 3,
+      "self_cpu_time_us": 3.164,
+      "cpu_time_us": 3.164,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::relu",
+      "calls": 2,
+      "self_cpu_time_us": 2.913,
+      "cpu_time_us": 7.16,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::as_strided",
+      "calls": 6,
+      "self_cpu_time_us": 2.413,
+      "cpu_time_us": 2.413,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::expand",
+      "calls": 3,
+      "self_cpu_time_us": 2.333,
+      "cpu_time_us": 3.165,
+      "self_cpu_memory_bytes": 0
+    },
+    {
+      "name": "aten::resolve_conj",
+      "calls": 6,
+      "self_cpu_time_us": 0.334,
+      "cpu_time_us": 0.334,
+      "self_cpu_memory_bytes": 0
+    }
+  ],
+  "iteration_latencies_ms": [
+    0.447791,
+    0.116042,
+    0.197458,
+    0.046417,
+    0.041958,
+    0.039541,
+    0.040375,
+    0.040583,
+    0.146708,
+    0.082459
+  ],
+  "latency": {
+    "count": 10,
+    "mean_ms": 0.119933,
+    "median_ms": 0.064438,
+    "p95_ms": 0.447791,
+    "stddev_ms": 0.120918,
+    "min_ms": 0.039541,
+    "max_ms": 0.447791,
+    "throughput_ips": 8337.974806
+  },
+  "snapshot": {
+    "procfs_available": false,
+    "window_seconds": 0.011231,
+    "cpu": {
+      "available": false,
+      "reason": "/proc/stat is not readable on this host",
+      "aggregate_percent": null,
+      "per_cpu_percent": {}
+    },
+    "memory": {
+      "source": "psutil",
+      "rss_start_kb": 263264,
+      "rss_end_kb": 267392,
+      "rss_peak_kb": 267392,
+      "rss_delta_kb": 4128,
+      "threads_start": 1,
+      "threads_end": 2,
+      "context_switches": {},
+      "mem_total_kb": null,
+      "mem_available_kb": null
+    },
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "time_series": [
+    {
+      "t_ms": 0.094,
+      "timestamp": 1792398786.185463,
+      "rss_kb": 263296,
+      "rss_mb": 257.125,
+      "threads": 2,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 109.8
+    },
+    {
+      "t_ms": 10.977,
+      "timestamp": 1792398786.196346,
+      "rss_kb": 267392,
+      "rss_mb": 261.125,
+      "threads": 2,
+      "cpu_percent": 90.2,
+      "process_cpu_percent": 76.2
+    }
+  ],
+  "time_series_summary": {
+    "count": 2,
+    "duration_ms": 10.883000000000001,
+    "rss_start_mb": 257.125,
+    "rss_peak_mb": 261.125,
+    "rss_end_mb": 261.125,
+    "cpu_mean_percent": 45.1,
+    "cpu_peak_percent": 90.2,
+    "cpu_p95_percent": 90.2,
+    "process_cpu_mean_percent": 93.0,
+    "process_cpu_peak_percent": 109.8
+  },
+  "perf": {
+    "available": false,
+    "reason": "perf binary was not found on PATH",
+    "counters": {},
+    "command": [],
+    "returncode": null,
+    "raw": ""
+  },
+  "system": {
+    "host": {
+      "system": "Darwin",
+      "release": "27.0.0",
+      "machine": "arm64",
+      "python": "3.11.14",
+      "linux": false
+    },
+    "cpu": {
+      "model": "Apple M3",
+      "logical_cores": 8,
+      "physical_cores": 8,
+      "affinity": {
+        "cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "mask": "ff",
+        "source": "os.cpu_count fallback"
+      },
+      "affinity_numa_nodes": []
+    },
+    "memory": {
+      "total_kb": 16777216
+    },
+    "numa": {
+      "available": false,
+      "reason": "/sys/devices/system/node is not present on this host",
+      "nodes": {}
+    },
+    "cache": {
+      "available": false,
+      "reason": "/sys/devices/system/cpu is not present on this host",
+      "caches": [],
+      "levels": {}
+    },
+    "perf": {
+      "available": false,
+      "reason": "perf binary was not found on PATH"
+    },
+    "procfs": {
+      "available": false,
+      "reason": "/proc/stat or /proc/self/status is not readable on this host"
+    }
+  },
+  "warnings": [],
+  "extra": {
+    "model": {
+      "parameter_count": 50826,
+      "class": "SmallMLP"
+    },
+    "input_shape": [
+      1,
+      64
+    ],
+    "thread_count": 1,
+    "torch_num_threads": 1,
+    "torch_num_interop_threads": 1
+  }
+}

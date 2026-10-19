@@ -1,0 +1,274 @@
+[
+  {
+    "cat": "Session",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 8949,
+    "ts": 40,
+    "ph": "X",
+    "name": "model_loading_uri",
+    "args": {}
+  },
+  {
+    "cat": "Session",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 73975,
+    "ts": 9590,
+    "ph": "X",
+    "name": "session_initialization",
+    "args": {}
+  },
+  {
+    "cat": "Node",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 325,
+    "ts": 84129,
+    "ph": "X",
+    "name": "fused /fc/Gemm_kernel_time",
+    "args": {
+      "output_size": "32",
+      "mem_bytes_requested_in_use": "560",
+      "mem_in_use_delta": "256",
+      "mem_in_use_peak": "784",
+      "input_type_shape": [
+        {
+          "float": [
+            2,
+            8
+          ]
+        },
+        {
+          "float": [
+            4
+          ]
+        }
+      ],
+      "output_type_shape": [
+        {
+          "float": [
+            2,
+            4
+          ]
+        }
+      ],
+      "mem_bytes_in_use": "784",
+      "provider": "CPUExecutionProvider",
+      "mem_arena_held": "1049104",
+      "thread_scheduling_stats": {
+        "main_thread": {
+          "thread_pool_name": "session-1-intra-op",
+          "thread_id": "0x1ed6b7f80",
+          "block_size": [],
+          "core": -1,
+          "Distribution": 0,
+          "DistributionEnqueue": 0,
+          "Run": 0,
+          "Wait": 0,
+          "WaitRevoke": 0
+        },
+        "sub_threads": {
+          "0x16d7f7000": {
+            "num_run": 0,
+            "core": -1
+          }
+        }
+      },
+      "mem_requested_in_use_delta": "32",
+      "parameter_size": "16",
+      "op_name": "FusedGemm",
+      "activation_size": "64",
+      "mem_arena_held_delta": "1048576",
+      "node_index": "2"
+    }
+  },
+  {
+    "cat": "Session",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 333,
+    "ts": 84125,
+    "ph": "X",
+    "name": "SequentialExecutor::Execute",
+    "args": {}
+  },
+  {
+    "cat": "Session",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 453,
+    "ts": 84008,
+    "ph": "X",
+    "name": "model_run",
+    "args": {}
+  },
+  {
+    "cat": "Node",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 28,
+    "ts": 84771,
+    "ph": "X",
+    "name": "fused /fc/Gemm_kernel_time",
+    "args": {
+      "provider": "CPUExecutionProvider",
+      "mem_in_use_peak": "784",
+      "mem_bytes_in_use": "784",
+      "mem_bytes_requested_in_use": "560",
+      "thread_scheduling_stats": {
+        "main_thread": {
+          "thread_pool_name": "session-1-intra-op",
+          "thread_id": "0x1ed6b7f80",
+          "block_size": [],
+          "core": -1,
+          "Distribution": 0,
+          "DistributionEnqueue": 0,
+          "Run": 0,
+          "Wait": 0,
+          "WaitRevoke": 0
+        },
+        "sub_threads": {
+          "0x16d7f7000": {
+            "num_run": 0,
+            "core": -1
+          }
+        }
+      },
+      "output_type_shape": [
+        {
+          "float": [
+            2,
+            4
+          ]
+        }
+      ],
+      "mem_arena_held": "1049104",
+      "mem_requested_in_use_delta": "32",
+      "op_name": "FusedGemm",
+      "output_size": "32",
+      "node_index": "2",
+      "input_type_shape": [
+        {
+          "float": [
+            2,
+            8
+          ]
+        },
+        {
+          "float": [
+            4
+          ]
+        }
+      ],
+      "activation_size": "64",
+      "mem_arena_held_delta": "0",
+      "parameter_size": "16",
+      "mem_in_use_delta": "256"
+    }
+  },
+  {
+    "cat": "Session",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 34,
+    "ts": 84768,
+    "ph": "X",
+    "name": "SequentialExecutor::Execute",
+    "args": {}
+  },
+  {
+    "cat": "Session",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 47,
+    "ts": 84756,
+    "ph": "X",
+    "name": "model_run",
+    "args": {}
+  },
+  {
+    "cat": "Node",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 12,
+    "ts": 84839,
+    "ph": "X",
+    "name": "fused /fc/Gemm_kernel_time",
+    "args": {
+      "mem_arena_held_delta": "0",
+      "provider": "CPUExecutionProvider",
+      "activation_size": "64",
+      "op_name": "FusedGemm",
+      "thread_scheduling_stats": {
+        "main_thread": {
+          "thread_pool_name": "session-1-intra-op",
+          "thread_id": "0x1ed6b7f80",
+          "block_size": [],
+          "core": -1,
+          "Distribution": 0,
+          "DistributionEnqueue": 0,
+          "Run": 0,
+          "Wait": 0,
+          "WaitRevoke": 0
+        },
+        "sub_threads": {
+          "0x16d7f7000": {
+            "num_run": 0,
+            "core": -1
+          }
+        }
+      },
+      "mem_arena_held": "1049104",
+      "mem_bytes_in_use": "784",
+      "output_size": "32",
+      "parameter_size": "16",
+      "mem_in_use_delta": "256",
+      "input_type_shape": [
+        {
+          "float": [
+            2,
+            8
+          ]
+        },
+        {
+          "float": [
+            4
+          ]
+        }
+      ],
+      "mem_requested_in_use_delta": "32",
+      "mem_in_use_peak": "784",
+      "mem_bytes_requested_in_use": "560",
+      "node_index": "2",
+      "output_type_shape": [
+        {
+          "float": [
+            2,
+            4
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "cat": "Session",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 15,
+    "ts": 84839,
+    "ph": "X",
+    "name": "SequentialExecutor::Execute",
+    "args": {}
+  },
+  {
+    "cat": "Session",
+    "pid": 97183,
+    "tid": 10139961,
+    "dur": 18,
+    "ts": 84836,
+    "ph": "X",
+    "name": "model_run",
+    "args": {}
+  }
+]

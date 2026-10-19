@@ -1,5 +1,200 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><title>TensorTrace report</title></head>
-<body><h1>TensorTrace report</h1><p>Template placeholder, implemented in step 4.</p></body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <style>
+    :root { color-scheme: light dark; --accent: #0b6bcb; --muted: #667085; --line: #d0d5dd; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+           margin: 0 auto; max-width: 1180px; padding: 2rem 1.25rem 4rem; line-height: 1.5; }
+    h1 { margin-bottom: 0.25rem; }
+    h2 { margin-top: 2.25rem; border-bottom: 1px solid var(--line); padding-bottom: 0.35rem; }
+    .meta { color: var(--muted); margin-top: 0; }
+    table { border-collapse: collapse; width: 100%; margin: 0.75rem 0 1.25rem; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--line); padding: 0.45rem 0.6rem; text-align: left; vertical-align: top; }
+    th { background: rgba(11, 107, 203, 0.08); }
+    tr:nth-child(even) td { background: rgba(127, 127, 127, 0.04); }
+    .note { border-left: 4px solid var(--accent); padding: 0.5rem 0.9rem; margin: 0.75rem 0;
+            background: rgba(11, 107, 203, 0.06); }
+    .rec { border: 1px solid var(--line); border-left-width: 5px; border-radius: 6px;
+           padding: 0.7rem 0.9rem; margin: 0.6rem 0; }
+    .rec.warning { border-left-color: #d97706; }
+    .rec.critical { border-left-color: #b42318; }
+    .rec.info { border-left-color: #0b6bcb; }
+    .rec code { font-weight: 700; }
+    .evidence { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
+    .pass { color: #067647; font-weight: 700; }
+    .fail { color: #b42318; font-weight: 700; }
+    .unavailable { color: var(--muted); font-style: italic; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>{{ title }}</h1>
+    <p class="meta">Run ID <code>{{ run_id }}</code> &middot; generated {{ generated_at }}</p>
+  </header>
+
+  <h2>Environment</h2>
+  <table>
+    <thead><tr><th>Field</th><th>Value</th></tr></thead>
+    <tbody>
+      {% for row in env_rows %}
+      <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Configuration</h2>
+  <table>
+    <thead><tr><th>Field</th><th>Value</th></tr></thead>
+    <tbody>
+      {% for row in config_rows %}
+      <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Latency summary</h2>
+  <table>
+    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+    <tbody>
+      {% for row in latency_rows %}
+      <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Top layers by total latency</h2>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Layer</th><th>Operation</th><th>Mean ms</th><th>Total ms</th><th>% of total</th><th>Output bytes</th></tr>
+    </thead>
+    <tbody>
+      {% for layer in top_layers %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ layer.name }}</td>
+        <td>{{ layer.op_type }}</td>
+        <td>{{ "%.3f"|format(layer.mean_ms) }}</td>
+        <td>{{ "%.3f"|format(layer.total_ms) }}</td>
+        <td>{{ "%.1f"|format(layer.percent_of_total) }}</td>
+        <td>{{ layer.output_bytes if layer.output_bytes is not none else "unavailable" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Cumulative attribution</h2>
+  <p>Layers covering {{ "%.0f"|format(cumulative.threshold_percent) }}% of measured layer time:
+     {{ cumulative.layer_count }} (covered {{ "%.1f"|format(cumulative.covered_percent) }}%).</p>
+  <table>
+    <thead><tr><th>Layer</th><th>Total ms</th><th>%</th><th>Cumulative %</th></tr></thead>
+    <tbody>
+      {% for row in cumulative.layers %}
+      <tr>
+        <td>{{ row.name }}</td>
+        <td>{{ "%.3f"|format(row.total_ms) }}</td>
+        <td>{{ "%.1f"|format(row.percent) }}</td>
+        <td>{{ "%.1f"|format(row.cumulative_percent) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Memory hotspots (output bytes)</h2>
+  <table>
+    <thead><tr><th>Layer</th><th>Operation</th><th>Output bytes</th><th>% of output bytes</th></tr></thead>
+    <tbody>
+      {% for row in memory.by_output_bytes %}
+      <tr>
+        <td>{{ row.name }}</td>
+        <td>{{ row.op_type }}</td>
+        <td>{{ row.output_bytes if row.output_bytes is not none else "unavailable" }}</td>
+        <td>{{ "%.1f"|format(row.percent_of_output_bytes) }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="unavailable">No per-layer memory data was reported.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Kernel counters (perf stat)</h2>
+  {% if not perf_available %}
+  <p class="note">perf stat unavailable: {{ perf_reason }}</p>
+  {% endif %}
+  <table>
+    <thead><tr><th>Event</th><th>Value</th><th>Unit</th><th>Run %</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for row in perf_rows %}
+      <tr>
+        <td>{{ row.event }}</td>
+        <td>{{ row.value }}</td>
+        <td>{{ row.unit }}</td>
+        <td>{{ "%.2f"|format(row.run_pct) if row.run_pct is not none else "unavailable" }}</td>
+        <td>{{ row.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>CPU and memory time series</h2>
+  <table>
+    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+    <tbody>
+      {% for row in time_series_rows %}
+      <tr><td>{{ row[0] }}</td><td>{{ row[1] }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Hotspot flags</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Measured</th><th>Threshold</th><th>Flagged</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Cache miss rate</td>
+        <td>{{ cache.cache_miss_rate if cache.cache_miss_rate is not none else "unavailable" }}</td>
+        <td>{{ cache.miss_rate_threshold }}</td>
+        <td>{{ "yes" if "high_cache_miss_rate" in cache.flags else "no" }}</td>
+      </tr>
+      <tr>
+        <td>IPC</td>
+        <td>{{ cache.ipc if cache.ipc is not none else "unavailable" }}</td>
+        <td>{{ cache.ipc_threshold }}</td>
+        <td>{{ "yes" if "low_ipc" in cache.flags else "no" }}</td>
+      </tr>
+      <tr>
+        <td>Latency CV</td>
+        <td>{{ variance.cv if variance.cv is not none else "unavailable" }}</td>
+        <td>{{ variance.threshold }}</td>
+        <td>{{ "yes" if variance.flagged else "no" }}</td>
+      </tr>
+      <tr>
+        <td>NUMA span</td>
+        <td>{{ numa.numa_nodes if numa.numa_nodes else "unavailable" }}</td>
+        <td>single node</td>
+        <td>{{ "yes" if numa.spans_multiple_numa_nodes else "no" }}</td>
+      </tr>
+      <tr>
+        <td>Threads vs physical cores</td>
+        <td>{{ numa.thread_count }} / {{ numa.physical_cores }}</td>
+        <td>&lt;= physical cores</td>
+        <td>{{ "yes" if numa.exceeds_physical_cores else "no" }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Recommendations</h2>
+  {% if recommendations %}
+    {% for rec in recommendations %}
+    <div class="rec {{ rec.severity }}">
+      <div><span class="severity">[{{ rec.severity|upper }}]</span> <code>{{ rec.code }}</code> &mdash; {{ rec.message }}</div>
+      <div class="evidence">Evidence: {{ rec.evidence }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
+  <p class="pass">No recommendations triggered.</p>
+  {% endif %}
+</body>
 </html>

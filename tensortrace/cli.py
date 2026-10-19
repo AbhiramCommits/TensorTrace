@@ -9,8 +9,11 @@ from dataclasses import replace
 from pathlib import Path
 
 from tensortrace import __version__
+from tensortrace.analysis.compare import compare_runs
 from tensortrace.config import DEFAULT_BACKENDS, DEFAULT_MODELS, RunConfig
 from tensortrace.profilers.runner import profile_run, save_result
+from tensortrace.profilers.schema import RunResult
+from tensortrace.report.render import render_comparison_markdown, render_report
 from tensortrace.system.sysfs import collect_sysinfo
 
 
@@ -87,13 +90,27 @@ def _cmd_sysinfo(_args: argparse.Namespace) -> int:
 
 
 def _cmd_report(args: argparse.Namespace) -> int:
-    print(f"report not implemented yet: {args.run_json}")
+    try:
+        result = RunResult.load(args.run_json)
+    except (OSError, ValueError) as exc:
+        print(f"tensortrace report: cannot read {args.run_json}: {exc}", file=sys.stderr)
+        return 2
+    markdown_path, html_path = render_report(result, args.run_json.parent)
+    print(f"markdown: {markdown_path}")
+    print(f"html: {html_path}")
     return 0
 
 
 def _cmd_compare(args: argparse.Namespace) -> int:
-    print(f"compare not implemented yet: {args.baseline} vs {args.candidate}")
-    return 0
+    try:
+        baseline = RunResult.load(args.baseline)
+        candidate = RunResult.load(args.candidate)
+    except (OSError, ValueError) as exc:
+        print(f"tensortrace compare: cannot read input: {exc}", file=sys.stderr)
+        return 2
+    comparison = compare_runs(baseline, candidate, threshold=args.threshold)
+    print(render_comparison_markdown(comparison))
+    return 1 if comparison["regression"] else 0
 
 
 def main(argv: list[str] | None = None) -> int:

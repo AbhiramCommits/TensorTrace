@@ -1,0 +1,98 @@
+"""Command-line interface for TensorTrace."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+from tensortrace import __version__
+from tensortrace.config import DEFAULT_BACKENDS, DEFAULT_MODELS, RunConfig
+
+
+def _add_common_run_args(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument("--backend", choices=[*DEFAULT_BACKENDS, "both"], default="torch")
+    parser.add_argument("--model", choices=DEFAULT_MODELS, default="resnet18")
+    parser.add_argument("--batch-size", type=int, default=1)
+    parser.add_argument("--iters", type=int, default=10, dest="iterations")
+    parser.add_argument("--warmup", type=int, default=3)
+    parser.add_argument("--threads", type=int, default=0)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--out", type=Path, default=Path("reports"))
+
+
+def build_parser() -> argparse.ArgumentParser:
+    """Build the top-level argument parser and all subcommands."""
+    parser = argparse.ArgumentParser(
+        prog="tensortrace",
+        description="Profile PyTorch and ONNX Runtime inference with Linux kernel counters.",
+    )
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    run_parser = sub.add_parser("run", help="run inference and write a JSON result")
+    _add_common_run_args(run_parser)
+
+    sub.add_parser("sysinfo", help="print host CPU, NUMA, cache, affinity, and perf info")
+
+    report_parser = sub.add_parser("report", help="render Markdown and HTML for a run JSON")
+    report_parser.add_argument("run_json", type=Path)
+
+    compare_parser = sub.add_parser("compare", help="compare baseline and candidate runs")
+    compare_parser.add_argument("baseline", type=Path)
+    compare_parser.add_argument("candidate", type=Path)
+    compare_parser.add_argument(
+        "--threshold",
+        type=float,
+        default=0.10,
+        help="mean-latency regression threshold as a fraction (default: 0.10)",
+    )
+    return parser
+
+
+def _cmd_run(args: argparse.Namespace) -> int:
+    config = RunConfig(
+        model=args.model,
+        backend=args.backend,
+        batch_size=args.batch_size,
+        iterations=args.iterations,
+        warmup=args.warmup,
+        threads=args.threads,
+        output_dir=args.out,
+        seed=args.seed,
+    )
+    print(json.dumps(config.to_dict(), indent=2))
+    return 0
+
+
+def _cmd_sysinfo(_args: argparse.Namespace) -> int:
+    print(json.dumps({"status": "not implemented"}, indent=2))
+    return 0
+
+
+def _cmd_report(args: argparse.Namespace) -> int:
+    print(f"report not implemented yet: {args.run_json}")
+    return 0
+
+
+def _cmd_compare(args: argparse.Namespace) -> int:
+    print(f"compare not implemented yet: {args.baseline} vs {args.candidate}")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Entry point for the ``tensortrace`` console script."""
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    handlers = {
+        "run": _cmd_run,
+        "sysinfo": _cmd_sysinfo,
+        "report": _cmd_report,
+        "compare": _cmd_compare,
+    }
+    return handlers[args.command](args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

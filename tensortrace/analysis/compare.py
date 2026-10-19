@@ -9,6 +9,7 @@ from tensortrace.profilers.schema import RunResult
 
 
 def _peak_rss_mb(result: RunResult) -> float | None:
+    """Return peak RSS in MB from the sampling summary or snapshot fallback."""
     summary = result.time_series_summary or {}
     value = summary.get("rss_peak_mb")
     if value is not None:
@@ -28,6 +29,7 @@ def _metric(
     unit: str = "",
     threshold_percent: float = 10.0,
 ) -> dict[str, Any]:
+    """Build one comparison row with delta, percent change, and status."""
     if baseline is None or candidate is None:
         return {
             "metric": name,

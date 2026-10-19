@@ -30,6 +30,7 @@ class RunConfig:
     seed: int = 42
 
     def __post_init__(self) -> None:
+        """Normalize paths and validate numeric fields."""
         self.output_dir = Path(self.output_dir)
         if self.batch_size < 1:
             raise ValueError("batch_size must be >= 1")

@@ -76,9 +76,11 @@ def profile_torch(config: RunConfig) -> RunResult:
     current: dict[str, list[int]] = defaultdict(lambda: [0, 0, 0, 0])
 
     def pre_hook(module: nn.Module, _inputs: tuple[Any, ...]) -> None:
+        """Record the start time for one leaf-module call."""
         starts[module] = time.perf_counter_ns()
 
     def post_hook(module: nn.Module, _inputs: tuple[Any, ...], output: Any) -> None:
+        """Record elapsed time and output bytes for one leaf-module call."""
         start = starts.pop(module, None)
         if start is None:
             return

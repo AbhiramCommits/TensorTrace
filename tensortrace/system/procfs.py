@@ -466,6 +466,7 @@ def summarize_samples(samples: list[dict[str, Any]]) -> dict[str, Any]:
     ]
 
     def _p95(values: list[float]) -> float | None:
+        """Return a nearest-rank 95th percentile or ``None`` for an empty list."""
         if not values:
             return None
         ordered = sorted(values)

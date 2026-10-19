@@ -17,6 +17,7 @@ class SmallMLP(nn.Module):
     """A three-layer MLP used as a small, export-friendly second workload."""
 
     def __init__(self, in_features: int = 64, hidden: int = 256, classes: int = 10) -> None:
+        """Build the three linear layers and their activations."""
         super().__init__()
         self.fc1 = nn.Linear(in_features, hidden)
         self.act1 = nn.ReLU()

@@ -183,6 +183,11 @@ matrix:
 Every JSON contains the full config, environment, per-layer rows, per-iteration
 latencies, CPU/memory time series, perf counters, and warnings.
 
+Those lines are from the Step 3 separate-process matrix. The Step 7 sweep
+re-ran the same matrix inside one process; its authoritative table is in
+[Results](#results) and `reports/sweep-summary.md`. Absolute latencies shifted
+because this host is not an isolated benchmark machine.
+
 ### `tensortrace report`
 
 ```bash
@@ -243,8 +248,11 @@ The complete comparison tables are committed as `reports/compare-*.md`.
 
 ## Results
 
-All numbers below were produced by the commands in this README on the build
-host described in `ENVIRONMENT.md`. Nothing is estimated.
+The Step 7 sweep (`make profile`, committed as `reports/sweep-summary.md` with
+raw JSON under `reports/sweep-runs/`) is the latest authoritative matrix. The
+Step 3 JSONs remain committed alongside it. All numbers were produced by
+commands in this README on the build host described in `ENVIRONMENT.md`.
+Nothing is estimated.
 
 ### Host and software
 
@@ -262,44 +270,51 @@ host described in `ENVIRONMENT.md`. Nothing is estimated.
 | onnxruntime | 1.31.0 |
 | perf | unavailable (`perf binary was not found on PATH`) |
 
-**Measurement conditions.** The host was not idle: load average was about
-12–14 during the runs because macOS storage-management services were active on
-a nearly full disk. One repeated ONNX ResNet-18 8-thread run measured 296.079 ms
-(CV 0.371) and is retained as `reports/run-20261019-083322-onnx-resnet18.json`;
-the headline table uses the later 60.832 ms run. The variance detector flagged
-the outlier with `REMEASURE`, which is the intended behavior.
+**Measurement conditions.** The host was not idle. The Step 3 matrix ran while
+the 1-minute load average was about 12–14 because macOS storage-management
+services were active on a nearly full disk. The Step 7 sweep ran later with a
+1-minute load of 7.66, a 5-minute load of 16.90, and a 15-minute load of 16.17.
+Absolute latencies shifted
+between the two matrices: for example, torch/resnet18 at 1 thread measured
+77.370 ms in Step 3 and 41.813 ms in the sweep. Both datasets are committed;
+the sweep is used below. Peak RSS is higher in the sweep because all eight
+configurations ran in one process and the allocator retained memory. Several
+configurations still crossed the 15% coefficient-of-variation threshold and
+emitted `REMEASURE`, including the 296.079 ms ONNX ResNet-18 8-thread outlier
+from Step 3 (`reports/run-20261019-083322-onnx-resnet18.json`, CV 0.371).
 
 ### Latency, throughput, and peak RSS
 
-Batch size 1, 10 measured iterations, 3 warmup iterations. Peak RSS is the
-process peak recorded by the sampling thread (psutil source on macOS) and
-includes model construction/ONNX export in the measurement window.
+Sweep values, batch size 1, 10 measured iterations, 3 warmup iterations. Peak
+RSS is the process peak recorded by the sampling thread (psutil source on
+macOS) and includes model construction/ONNX export in the measurement window.
 
 | Backend | Model | Threads | Mean ms | Median ms | p95 ms | Stddev ms | Throughput (inf/s) | Peak RSS MB |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| torch | resnet18 | 1 | 77.370 | 77.610 | 99.232 | 10.673 | 12.92 | 322.2 |
-| torch | resnet18 | 8 | 21.012 | 20.911 | 22.205 | 0.638 | 47.59 | 341.9 |
-| torch | mlp | 1 | 0.120 | 0.064 | 0.448 | 0.121 | 8,337.97 | 261.1 |
-| torch | mlp | 8 | 0.036 | 0.035 | 0.038 | 0.001 | 28,106.39 | 285.8 |
-| onnx | resnet18 | 1 | 77.621 | 79.011 | 81.919 | 3.734 | 12.88 | 401.0 |
-| onnx | resnet18 | 8 | 60.832 | 63.489 | 72.963 | 8.626 | 16.44 | 389.3 |
-| onnx | mlp | 1 | 0.024 | 0.023 | 0.029 | 0.002 | 42,068.60 | 306.9 |
-| onnx | mlp | 8 | 0.035 | 0.033 | 0.044 | 0.004 | 28,929.58 | 307.3 |
+| torch | resnet18 | 1 | 41.813 | 36.831 | 58.822 | 9.021 | 23.92 | 343.2 |
+| torch | resnet18 | 8 | 23.334 | 23.227 | 24.558 | 0.726 | 42.86 | 368.3 |
+| torch | mlp | 1 | 0.036 | 0.036 | 0.037 | 0.0004 | 27,949.28 | 326.6 |
+| torch | mlp | 8 | 0.036 | 0.036 | 0.041 | 0.0018 | 27,450.58 | 326.6 |
+| onnx | resnet18 | 1 | 64.203 | 63.908 | 67.276 | 1.549 | 15.58 | 425.3 |
+| onnx | resnet18 | 8 | 66.701 | 66.014 | 97.018 | 13.593 | 14.99 | 426.6 |
+| onnx | mlp | 1 | 0.024 | 0.024 | 0.027 | 0.0021 | 41,782.44 | 343.3 |
+| onnx | mlp | 8 | 0.092 | 0.043 | 0.543 | 0.1502 | 10,836.19 | 343.3 |
 
 ### Top 3 hottest layers
 
-Percentages are share of summed leaf-module or node time for that run.
+Sweep values. Percentages are share of summed leaf-module or node time for that
+run.
 
 | Backend / model / threads | Top 3 layers (% of total layer time) |
 | --- | --- |
-| torch / resnet18 / 1 | `conv1` 15.3%; `maxpool` 12.0%; `layer1.0.conv1` 6.6% |
-| torch / resnet18 / 8 | `conv1` 9.7%; `layer1.1.conv1` 6.7%; `maxpool` 6.4% |
-| torch / mlp / 1 | `fc1` 49.9%; `fc2` 23.3%; `fc3` 12.5% |
-| torch / mlp / 8 | `fc1` 27.8%; `fc2` 27.5%; `fc3` 23.9% |
-| onnx / resnet18 / 1 | `layer4.0/conv2` 7.4%; `layer4.1/conv2` 7.4%; `layer4.1/conv1` 7.1% |
-| onnx / resnet18 / 8 | `layer4.1/conv1` 8.5%; `layer3.1/conv2` 7.1%; `layer3.0/conv2` 7.1% |
-| onnx / mlp / 1 | `fc2` Gemm 48.6%; `fc1` Gemm 32.4%; `fc3` Gemm 19.0% |
-| onnx / mlp / 8 | `fc2` Gemm 37.7%; `fc1` Gemm 34.0%; `fc3` Gemm 28.3% |
+| torch / resnet18 / 1 | `conv1` 15.4%; `maxpool` 13.1%; `layer1.0.conv1` 7.7% |
+| torch / resnet18 / 8 | `conv1` 11.1%; `layer1.1.conv1` 6.6%; `maxpool` 6.5% |
+| torch / mlp / 1 | `fc1` 28.2%; `fc2` 27.8%; `fc3` 24.3% |
+| torch / mlp / 8 | `fc1` 28.2%; `fc2` 27.5%; `fc3` 24.3% |
+| onnx / resnet18 / 1 | `layer4.1/conv2` 7.4%; `layer4.1/conv1` 7.3%; `conv1` 7.2% |
+| onnx / resnet18 / 8 | `layer3.1/conv1` 8.6%; `layer3.0/conv2` 8.3%; `conv1` 8.2% |
+| onnx / mlp / 1 | `fc2` Gemm 47.2%; `fc1` Gemm 34.0%; `fc3` Gemm 18.9% |
+| onnx / mlp / 8 | `fc1` Gemm 77.2%; `fc2` Gemm 13.5%; `fc3` Gemm 9.3% |
 
 ### Kernel counters: unavailable on this host
 
@@ -326,29 +341,36 @@ the unsupported rows and the supported counts.
 
 ### 1-thread vs all-thread scaling
 
-All-thread means 8 logical CPUs on this host. The compare gate uses a 10%
+Sweep values. All-thread means 8 logical CPUs on this host. The sweep computes
+the same `compare_runs` gate used by `tensortrace compare`, with a 10%
 mean-latency threshold.
 
 | Workload | 1 thread mean | 8 threads mean | Speedup | Mean change | Gate |
 | --- | --- | --- | --- | --- | --- |
-| torch / resnet18 | 77.370 ms | 21.012 ms | 3.68x | -72.84% | PASS (exit 0) |
-| torch / mlp | 0.120 ms | 0.036 ms | 3.37x | -70.33% | PASS (exit 0) |
-| onnx / resnet18 | 77.621 ms | 60.832 ms | 1.28x | -21.63% | PASS (exit 0) |
-| onnx / mlp | 0.024 ms | 0.035 ms | 0.69x | +45.42% | REGRESSION (exit 1) |
+| torch / resnet18 | 41.813 ms | 23.334 ms | 1.79x | -44.19% | PASS |
+| torch / mlp | 0.036 ms | 0.036 ms | 0.98x | +1.82% | PASS |
+| onnx / resnet18 | 64.203 ms | 66.701 ms | 0.96x | +3.89% | PASS |
+| onnx / mlp | 0.024 ms | 0.092 ms | 0.26x | +285.59% | REGRESSION (exit 1) |
 
 The ONNX MLP result is a real small-workload threading regression: thread-pool
-synchronization costs more than the 20–50 µs of Gemm work. TensorTrace's gate
-caught it and returned exit code 1.
+synchronization and allocator jitter cost more than the 20–50 µs of Gemm work.
+Its 8-thread run had a 0.043 ms median but a 0.543 ms p95 and emitted
+`REMEASURE` (CV 1.628). TensorTrace's gate caught the mean regression and
+returned exit code 1. The torch MLP workload is also too small to benefit from
+eight threads; its 0.98x result is effectively flat rather than a speedup.
 
 ### Recommendations actually emitted
 
-Across the committed run JSONs, the engine emitted:
+Across all committed Step 3 and Step 7 run JSONs, the engine emitted:
 
 | Code | Severity | Where | Evidence |
 | --- | --- | --- | --- |
 | `PERF_UNAVAILABLE` | info | every run | `perf unavailable: perf binary was not found on PATH` |
-| `REMEASURE` | warning | `run-20261019-083306-torch-mlp` (1 thread) | `CV=1.008 (stddev=0.121 ms / mean=0.120 ms) over 10 iterations > threshold 0.15` |
-| `REMEASURE` | warning | `run-20261019-083322-onnx-resnet18` (8 threads, unstable repeat) | `CV=0.371 (stddev=109.711 ms / mean=296.079 ms) over 10 iterations > threshold 0.15` |
+| `REMEASURE` | warning | sweep `run-20261019-084556-torch-resnet18` (1 thread) | `CV=0.216 (stddev=9.021 ms / mean=41.813 ms) over 10 iterations > threshold 0.15` |
+| `REMEASURE` | warning | sweep `run-20261019-084559-onnx-resnet18` (8 threads) | `CV=0.204 (stddev=13.593 ms / mean=66.701 ms) over 10 iterations > threshold 0.15` |
+| `REMEASURE` | warning | sweep `run-20261019-084559-onnx-mlp-2` (8 threads) | `CV=1.628 (stddev=0.150 ms / mean=0.092 ms) over 10 iterations > threshold 0.15` |
+| `REMEASURE` | warning | Step 3 `run-20261019-083306-torch-mlp` (1 thread) | `CV=1.008 (stddev=0.121 ms / mean=0.120 ms) over 10 iterations > threshold 0.15` |
+| `REMEASURE` | warning | Step 3 `run-20261019-083322-onnx-resnet18` (8 threads, unstable repeat) | `CV=0.371 (stddev=109.711 ms / mean=296.079 ms) over 10 iterations > threshold 0.15` |
 
 No `PIN_NUMA`, `THREAD_OVERSUBSCRIBE`, or `SET_THREADS` fired because NUMA
 topology was unavailable on the host and the thread count never exceeded the 8
@@ -363,14 +385,16 @@ that do trigger them.
 Local commands and exact output:
 
 ```text
-$ ruff check .
+$ make lint
+.venv/bin/python -m ruff check .
 All checks passed!
 
-$ pytest -q --cov=tensortrace --cov-report=term-missing
+$ make test
+.venv/bin/python -m pytest -q --cov=tensortrace --cov-report=term-missing
 ........................................................................ [ 90%]
 ........                                                                 [100%]
-TOTAL                                      1453    246    386    65    81%
-80 passed in 2.98s
+TOTAL                                      1453    245    386    64    81%
+80 passed in 15.66s
 ```
 
 - **80 tests passing**, including the `@pytest.mark.slow` integration test that

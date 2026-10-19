@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "run_id": "run-20261019-084559-onnx-mlp-2",
+  "backend": "onnx",
+  "model": "mlp",
+  "config": {
+    "model": "mlp",
+    "backend": "onnx",
+    "batch_size": 1,
+    "iterations": 10,
+    "warmup": 3,
+    "threads": 8,
+    "output_dir": "reports/sweep-runs",
+    "seed": 42,
+    "effective_threads": 8
+  },
+  "environment": {
+    "timestamp_utc": "2026-10-19T08:45:59.756787+00:00",
+    "hostname": "Abhirams-MacBook-Air.local",
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "python_version": "3.11.14",
+    "python_executable": "/Users/abhiramkasireddi/TensorTrace/.venv/bin/python",
+    "cpu_count": 8,
+    "packages": {
+      "torch": "2.14.1",
+      "onnxruntime": "1.31.0",
+      "psutil": "7.2.2",
+      "numpy": "2.4.6"
+    }
+  },
+  "layers": [
+    {
+      "name": "fused /fc1/Gemm_kernel_time",
+      "op_type": "FusedGemm",
+      "mean_ms": 0.059,
+      "total_ms": 0.59,
+      "calls": 10,
+      "output_bytes": 1024,
+      "self_memory_bytes": 206376,
+      "percent_of_total": 77.2251
+    },
+    {
+      "name": "fused /fc2/Gemm_kernel_time",
+      "op_type": "FusedGemm",
+      "mean_ms": 0.0103,
+      "total_ms": 0.103,
+      "calls": 10,
+      "output_bytes": 512,
+      "self_memory_bytes": 206376,
+      "percent_of_total": 13.4817
+    },
+    {
+      "name": "/fc3/Gemm_kernel_time",
+      "op_type": "Gemm",
+      "mean_ms": 0.0071,
+      "total_ms": 0.071,
+      "calls": 10,
+      "output_bytes": 40,
+      "self_memory_bytes": 206416,
+      "percent_of_total": 9.2932
+    }
+  ],
+  "op_types": [
+    {
+      "name": "FusedGemm",
+      "op_type": "FusedGemm",
+      "mean_ms": 0.0693,
+      "total_ms": 0.693,
+      "calls": 20,
+      "output_bytes": 1024,
+      "self_memory_bytes": 206376,
+      "percent_of_total": 90.7068
+    },
+    {
+      "name": "Gemm",
+      "op_type": "Gemm",
+      "mean_ms": 0.0071,
+      "total_ms": 0.071,
+      "calls": 10,
+      "output_bytes": 40,
+      "self_memory_bytes": 206416,
+      "percent_of_total": 9.2932
+    }
+  ],
+  "operators": [],
+  "iteration_latencies_ms": [
+    0.045334,
+    0.043375,
+    0.037291,
+    0.040708,
+    0.0435,
+    0.039417,
+    0.042792,
+    0.040875,
+    0.542917,
+    0.046625
+  ],
+  "latency": {
+    "count": 10,
+    "mean_ms": 0.092283,
+    "median_ms": 0.043083,
+    "p95_ms": 0.542917,
+    "stddev_ms": 0.150234,
+    "min_ms": 0.037291,
+    "max_ms": 0.542917,
+    "throughput_ips": 10836.185056
+  },
+  "snapshot": {
+    "procfs_available": false,
+    "window_seconds": 0.026955,
+    "cpu": {
+      "available": false,
+      "reason": "/proc/stat is not readable on this host",
+      "aggregate_percent": null,
+      "per_cpu_percent": {}
+    },
+    "memory": {
+      "source": "psutil",
+      "rss_start_kb": 351504,
+      "rss_end_kb": 351504,
+      "rss_peak_kb": 351504,
+      "rss_delta_kb": 0,
+      "threads_start": 11,
+      "threads_end": 11,
+      "context_switches": {},
+      "mem_total_kb": null,
+      "mem_available_kb": null
+    },
+    "affinity": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "time_series": [
+    {
+      "t_ms": 0.261,
+      "timestamp": 1792399559.7300549,
+      "rss_kb": 351536,
+      "rss_mb": 343.297,
+      "threads": 12,
+      "cpu_percent": 0.0,
+      "process_cpu_percent": 103.7
+    },
+    {
+      "t_ms": 26.72,
+      "timestamp": 1792399559.756516,
+      "rss_kb": 351504,
+      "rss_mb": 343.266,
+      "threads": 11,
+      "cpu_percent": 81.3,
+      "process_cpu_percent": 421.4
+    }
+  ],
+  "time_series_summary": {
+    "count": 2,
+    "duration_ms": 26.459,
+    "rss_start_mb": 343.297,
+    "rss_peak_mb": 343.297,
+    "rss_end_mb": 343.266,
+    "cpu_mean_percent": 40.65,
+    "cpu_peak_percent": 81.3,
+    "cpu_p95_percent": 81.3,
+    "process_cpu_mean_percent": 262.55,
+    "process_cpu_peak_percent": 421.4
+  },
+  "perf": {
+    "available": false,
+    "reason": "perf binary was not found on PATH",
+    "counters": {},
+    "command": [],
+    "returncode": null,
+    "raw": ""
+  },
+  "system": {
+    "host": {
+      "system": "Darwin",
+      "release": "27.0.0",
+      "machine": "arm64",
+      "python": "3.11.14",
+      "linux": false
+    },
+    "cpu": {
+      "model": "Apple M3",
+      "logical_cores": 8,
+      "physical_cores": 8,
+      "affinity": {
+        "cpus": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "mask": "ff",
+        "source": "os.cpu_count fallback"
+      },
+      "affinity_numa_nodes": []
+    },
+    "memory": {
+      "total_kb": 16777216
+    },
+    "numa": {
+      "available": false,
+      "reason": "/sys/devices/system/node is not present on this host",
+      "nodes": {}
+    },
+    "cache": {
+      "available": false,
+      "reason": "/sys/devices/system/cpu is not present on this host",
+      "caches": [],
+      "levels": {}
+    },
+    "perf": {
+      "available": false,
+      "reason": "perf binary was not found on PATH"
+    },
+    "procfs": {
+      "available": false,
+      "reason": "/proc/stat or /proc/self/status is not readable on this host"
+    }
+  },
+  "warnings": [],
+  "extra": {
+    "model": {
+      "parameter_count": 50826,
+      "class": "SmallMLP"
+    },
+    "input_shape": [
+      1,
+      64
+    ],
+    "cache_hit": true,
+    "onnx_path": ".onnx-cache/mlp-b1-s42.onnx",
+    "provider": "CPUExecutionProvider",
+    "graph_optimization_level": "ORT_ENABLE_ALL",
+    "thread_count": 8,
+    "model_parameters": 50826,
+    "profiled_rows": 30
+  }
+}

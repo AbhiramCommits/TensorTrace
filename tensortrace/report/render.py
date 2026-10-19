@@ -47,6 +47,7 @@ def _table(headers: list[str], rows: list[list[Any]]) -> list[str]:
 
 
 def _environment_rows(result: RunResult) -> list[list[Any]]:
+    """Build the environment table rows for a report."""
     environment = result.environment or {}
     system = result.system or {}
     host = system.get("host") or {}
@@ -83,6 +84,7 @@ def _environment_rows(result: RunResult) -> list[list[Any]]:
 
 
 def _config_rows(result: RunResult) -> list[list[Any]]:
+    """Build the configuration table rows for a report."""
     config = result.config or {}
     extra = result.extra or {}
     model = extra.get("model") or {}
@@ -104,6 +106,7 @@ def _config_rows(result: RunResult) -> list[list[Any]]:
 
 
 def _latency_rows(result: RunResult) -> list[list[Any]]:
+    """Build the latency summary table rows for a report."""
     latency = result.latency or {}
     return [
         ["Iterations", latency.get("count")],
@@ -117,6 +120,7 @@ def _latency_rows(result: RunResult) -> list[list[Any]]:
 
 
 def _perf_rows(result: RunResult) -> list[dict[str, Any]]:
+    """Build perf table rows, preserving explicit unavailable states."""
     perf = result.perf or {}
     available = bool(perf.get("available"))
     reason = perf.get("reason") or ""
@@ -174,6 +178,7 @@ def _perf_rows(result: RunResult) -> list[dict[str, Any]]:
 
 
 def _time_series_rows(result: RunResult) -> list[list[Any]]:
+    """Build the CPU/memory summary table rows for a report."""
     summary = result.time_series_summary or {}
     memory = (result.snapshot or {}).get("memory") or {}
     return [
@@ -197,6 +202,7 @@ def _time_series_rows(result: RunResult) -> list[list[Any]]:
 
 
 def _recommendation_rows(result: RunResult) -> list[dict[str, Any]]:
+    """Return serialized recommendations for a result."""
     return [rec.to_dict() for rec in analyze_result(result)["recommendations"]]
 
 

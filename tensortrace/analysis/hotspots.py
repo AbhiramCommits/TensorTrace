@@ -59,6 +59,7 @@ def cumulative_attribution(result: RunResult, threshold: float = 0.80) -> dict[s
 
 
 def _memory_row(layer: LayerTiming, denominator: int) -> dict[str, Any]:
+    """Build one memory-hotspot row with its share of total output bytes."""
     return {
         "name": layer.name,
         "op_type": layer.op_type,

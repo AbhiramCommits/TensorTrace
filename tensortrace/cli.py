@@ -18,6 +18,7 @@ from tensortrace.system.sysfs import collect_sysinfo
 
 
 def _add_common_run_args(parser: argparse.ArgumentParser) -> None:
+    """Register the options shared by all ``run`` invocations."""
     parser.add_argument("--backend", choices=[*DEFAULT_BACKENDS, "both"], default="torch")
     parser.add_argument("--model", choices=DEFAULT_MODELS, default="resnet18")
     parser.add_argument("--batch-size", type=int, default=1)
@@ -58,6 +59,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def _cmd_run(args: argparse.Namespace) -> int:
+    """Profile the selected backend(s), save JSON results, and print a summary."""
     base = RunConfig(
         model=args.model,
         backend="torch" if args.backend == "both" else args.backend,
@@ -85,11 +87,13 @@ def _cmd_run(args: argparse.Namespace) -> int:
 
 
 def _cmd_sysinfo(_args: argparse.Namespace) -> int:
+    """Print the host telemetry payload as JSON."""
     print(json.dumps(collect_sysinfo(), indent=2))
     return 0
 
 
 def _cmd_report(args: argparse.Namespace) -> int:
+    """Render Markdown and HTML next to a run JSON file."""
     try:
         result = RunResult.load(args.run_json)
     except (OSError, ValueError) as exc:
@@ -102,6 +106,7 @@ def _cmd_report(args: argparse.Namespace) -> int:
 
 
 def _cmd_compare(args: argparse.Namespace) -> int:
+    """Print a regression table and return 1 when the latency gate fails."""
     try:
         baseline = RunResult.load(args.baseline)
         candidate = RunResult.load(args.candidate)

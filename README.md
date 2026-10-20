@@ -70,7 +70,8 @@ tensortrace.cli
 
 ## Install
 
-Python 3.10+ is required. The build host used Python 3.11.14.
+Python 3.11+ is required (the pinned numpy 2.4 and onnxruntime 1.31 have no
+Python 3.10 wheels). The build host used Python 3.11.14.
 
 ```bash
 python3.11 -m venv .venv
@@ -403,11 +404,9 @@ TOTAL                                      1453    245    386    64    81%
 - **ruff clean** with `E`, `F`, `I`, `UP`, and `B` rules.
 - The suite runs offline and without root. Parser tests use captured text;
   analysis tests use synthetic `RunResult` objects.
-- `.github/workflows/ci.yml` is configured for `ubuntu-latest` with Python 3.10
-  and 3.11, CPU torch wheels, `ruff check .`, the fast suite on 3.10, the full
-  suite (including slow) on 3.11, and uploads `reports/` as an artifact. It was
-  not executed remotely in this build because no remote was added and no push
-  was performed; the same commands were run locally.
+- `.github/workflows/ci.yml` runs on `ubuntu-latest` with Python 3.11 and
+  3.12, CPU torch wheels, `ruff check .`, the full suite (including slow) on
+  3.11, the fast suite on 3.12, and uploads `reports/` as an artifact.
 
 Test files:
 
